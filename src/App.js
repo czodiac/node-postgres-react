@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { MerchantsList } from './features/merchants/MerchantsList'
 
 function App() {
+    const [msg, setMsg] = useState('')
     const [merchants, setMerchants] = useState(false)
 
     useEffect(() => {
         getMerchant()
     }, []) // Runs only once.
+
+    const updateMsg = (newMsg) => {
+        setMsg(newMsg)
+    }
 
     const getMerchant = () => {
         fetch('http://localhost:3001')
@@ -17,8 +23,8 @@ function App() {
     }
 
     const createMerchant = () => {
-        let name = prompt('Enter merchant name')
-        let email = prompt('Enter merchant email')
+        let name = prompt('Enter name')
+        let email = prompt('Enter email')
         fetch('http://localhost:3001/merchants', {
             method: 'POST',
             headers: {
@@ -30,29 +36,17 @@ function App() {
                 return response.text();
             })
             .then(data => {
-                alert(data)
+                updateMsg(data)
                 getMerchant()
             })
     }
 
-    const deleteMerchant = () => {
-        let id = prompt('Enter merchant ID');
-        fetch(`http://localhost:3001/merchants/${id}`, {
-            method: 'DELETE'
-        }).then(response => {
-            return response.text();
-        }).then(data => {
-            alert(data)
-            getMerchant()
-        })
-    }
-
     return (
         <div>
-            {merchants ? merchants : 'There is no merchant in the DB.'}
+            {msg}
+            <MerchantsList list={merchants} getMerchant={getMerchant} updateMsg={updateMsg} />
             <br />
             <button onClick={createMerchant}>Add merchant</button>
-            <button onClick={deleteMerchant}>Delete merchant</button>
         </div>
     );
 }
