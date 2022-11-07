@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Add/update/delete merchant on PostgresQL
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple React web app that can add/update/delete a merchant on PostgresQL.
+
+- Configured to run on http://localhost:3000 (launch.json)
+
+- Hard-coded to use a NodeJs service running on http://localhost:3001/merchants (https://github.com/czodiac/node-postgres)
 
 ## Available Scripts
 
